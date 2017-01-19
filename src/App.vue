@@ -12,11 +12,12 @@
         <router-link to="/seller">商家</router-link>
       </li>
     </ul>
-    <router-view></router-view>
+    <router-view :seller="seller"></router-view>
   </div>
 </template>
 <script type="text/ecmascript-6">
   import header from './components/header/header';
+
   const ERR_OK = 0;
   export default {
     data () {

@@ -192,7 +192,7 @@
               padding: 0 12px;
               margin-bottom: 12px;
               font-size: 0;
-              &.last-child {
+              &:last-child {
                 margin-bottom: 0;
               }
               .icon {
@@ -246,6 +246,9 @@
         margin: -64px auto 0 auto;
         clear: both;
         font-size: 32px;
+        .icon-close {
+          padding: 6px;
+        }
       }
     }
 
@@ -343,7 +346,7 @@
       }
     },
     components: {
-      star: star
+      star
     },
     created () {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
