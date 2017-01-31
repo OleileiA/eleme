@@ -1,5 +1,6 @@
 // https://github.com/shelljs/shelljs
 require('./check-versions')()
+/* 引入shell模块，允许在node中使用命令行 */
 require('shelljs/global')
 env.NODE_ENV = 'production'
 

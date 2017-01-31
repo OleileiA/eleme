@@ -13,7 +13,7 @@
       background-color: #141d27;
       .content-left {
         display: flex;
-        flex: 0 0 270px;
+        flex: 1 0 270px;
         width: 270px;
         font-size: 0;
         .logo-wrapper,

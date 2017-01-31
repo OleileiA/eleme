@@ -27,7 +27,6 @@
         seller: {
           id: (function () {
             let queryParam = urlParse();
-            console.log(queryParam);
             return queryParam.id;
           })()
         }
