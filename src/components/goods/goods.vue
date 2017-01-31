@@ -156,7 +156,7 @@
         <li v-for="item in goods" class="food-list food-list-hook">
           <h1 class="title">{{item.name}}</h1>
           <ul>
-            <li v-for="food in item.foods" class="food-item border-1px">
+            <li v-for="food in item.foods" class="food-item border-1px" @click="selectFood(food, $event)">
               <div class="icon"><img width="57" height="57" v-bind:src="food.icon" alt="food-icon"></div>
               <div class="content">
                 <h2 class="name">{{food.name}}</h2>
@@ -169,7 +169,7 @@
                                                                 class="old">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
-                  <cartcontrol :food="food"></cartcontrol>
+                  <cartcontrol :food="food" v-on:cartAdd="getTarget"></cartcontrol>
                 </div>
               </div>
             </li>
@@ -177,20 +177,25 @@
         </li>
       </ul>
     </div>
-    <shopcart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice" :select-foods="selectFoods"></shopcart>
+    <shopcart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice" :select-foods="selectFoods"
+              ref="shopCart"></shopcart>
+      <food :food="selectedFood" ref="foodDetail" v-on:foodBall="getTarget"></food>
   </div>
 </template>
 <script type='text/ecmascript-6'>
   import BScroll from 'better-scroll';
   import shopcart from '../shopcart/shopcart.vue';
   import cartcontrol from '../cartcontrol/cartcontrol.vue';
+  import food from '../food/food.vue';
   const ERR_OK = 0;
   export default {
     data () {
       return {
         goods: [],
         listHeight: [],
-        scrollY: 0
+        scrollY: 0,
+        selectedFood: {},
+        shopCart: this.$refs.shopCart
       };
     },
     props: {
@@ -243,8 +248,8 @@
           click: true
         });
         this.fs = new BScroll(this.$refs.foodsWrapper, {
-          /* 这个配置项表示，scroll在滚动的时候能实时告诉位置。 */
           click: true,
+          /* 这个配置项表示，scroll在滚动的时候能实时告诉位置。 */
           probeType: 3
         });
         /* 监听滚动的实例的滚动事件，获得实时的Y值 */
@@ -272,11 +277,24 @@
         let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
         let ele = foodList[index];
         this.fs.scrollToElement(ele, 300);
+      },
+      getTarget (target) {
+        this.$nextTick(() => {
+          this.$refs.shopCart.drop(target);
+        });
+      },
+      selectFood (food, event) {
+        if (!event._constructed) {
+          return false;
+        }
+        this.selectedFood = food;
+        this.$refs.foodDetail.show();
       }
     },
     components: {
       shopcart,
-      cartcontrol
+      cartcontrol,
+      food
     }
   };
 </script>

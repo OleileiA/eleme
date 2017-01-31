@@ -33,7 +33,7 @@
       &.move-enter-active, &.move-leave-active {
         transition: all .4s linear;
         opacity: 1;
-        transform: translate3D(0, 0, 0);
+        transform: translate3d(0, 0, 0);
         .inner {
           transition: all .4s linear;
           transform: rotate(0);
@@ -41,7 +41,7 @@
       }
       &.move-enter, &.move-leave-active {
         opacity: 0;
-        transform: translate3D(24px, 0, 0);
+        transform: translate3d(24px, 0, 0);
         .inner {
           transform: rotate(180deg);
         }
@@ -53,12 +53,12 @@
 <template>
   <div class="cartcontrol">
     <transition name="move">
-      <div class="cart-decrease" v-if="food.count > 0" @click="decrease($event)">
+      <div class="cart-decrease" v-if="food.count > 0" @click.stop.prevent="decrease($event)">
         <span class="inner icon-remove_circle_outline"></span>
       </div>
     </transition>
     <div class="count" v-if="food.count > 0">{{food.count}}</div>
-    <div class="cart-add icon-add_circle" @click="add($event)"></div>
+    <div class="cart-add icon-add_circle" @click.stop.prevent="add($event)"></div>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -79,6 +79,8 @@
         } else {
           this.food.count++;
         }
+        /* 在添加时触发事件获得元素得到位置(为了做小球落下效果) */
+        this.$emit('cartAdd', event.target);
       },
       decrease (event) {
         if (!event._constructed) {
