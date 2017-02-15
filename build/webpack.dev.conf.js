@@ -10,7 +10,7 @@ var utils = require('./utils');
 //基础webpack配置文件，被开发环境和生产环境共享。
 var baseWebpackConfig = require('./webpack.base.conf');
 
-//webpack提供的操作html文件的插件
+//webpack提供的操作html文件的插件，自动生成html文件
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var FriendlyErrors = require('friendly-errors-webpack-plugin');
 

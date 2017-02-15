@@ -8,7 +8,7 @@ export function saveToLocal (id, key, value) {
     seller[id] = {};
   } else {
     seller = JSON.parse(seller);
-    /* id对应着不同的商家 */
+    /* id对应着不同的用户 */
     if (!seller[id]) {
       seller[id] = {};
     }

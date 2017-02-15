@@ -12,9 +12,6 @@
   "dependencies": {
     "better-scroll": "^0.1.11",
     "iscroll": "^5.2.0",
-    "less": "^2.7.2",
-    "less-loader": "^2.2.3",
-    "mint-ui": "^2.1.0",
     "vue": "^2.1.0",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.1.1"

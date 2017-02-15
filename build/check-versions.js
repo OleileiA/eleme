@@ -1,14 +1,23 @@
-/*semver解析版本号的辅助模块 https://www.npmjs.com/package/semver*/
 var semver = require('semver');
+/* semver解析版本号的辅助模块 https://www.npmjs.com/package/semver */
+/* semver.valid('1.2.3') // '1.2.3'
+ semver.valid('a.b.c') // null
+ semver.clean('  =v1.2.3   ') // '1.2.3'
+ semver.satisfies('1.2.3', '1.x || >=2.5.0 || 5.0.0 - 7.2.3') // true
+ semver.gt('1.2.3', '9.8.7') // false
+ semver.lt('1.2.3', '9.8.7') // true */
+
 /*chalk模块 使命令行的输入样式，个性化。*/
 var chalk = require('chalk');
+
 /* 引入了 npm init 的配置文件 package.json*/
 var packageConfig = require('../package.json');
 
 /*定义exec方法，引入 子进程 模块，新开一个进程把传入的cmd处理并且返回*/
+/* 简单地来说就是新开一个node进程执行执行传入的cmd指令 */
 var exec = function (cmd) {
   return require('child_process')
-    .execSync(cmd).toString().trim()
+  .execSync(cmd).toString().trim()
 };
 /*定义了一个数组，两个对象分别对应着node 和npm 的当前版本和项目的版本需求*/
 var versionRequirements = [
@@ -30,13 +39,12 @@ module.exports = function () {
   var warnings = [];
   for (var i = 0; i < versionRequirements.length; i++) {
     var mod = versionRequirements[i];
-    console.log(mod.currentVersion);
     /*semver.satisfies('1.2.3', '1.x || >=2.5.0 || 5.0.0 - 7.2.3') // true*/
     /*如果当前版本不满足require版本就把关于模块版本的警告语句push到warings数组中。*/
     if (!semver.satisfies(mod.currentVersion, mod.versionRequirement)) {
       warnings.push(mod.name + ': ' +
-        chalk.red(mod.currentVersion) + ' should be ' +
-        chalk.green(mod.versionRequirement)
+      chalk.red(mod.currentVersion) + ' should be ' +
+      chalk.green(mod.versionRequirement)
       )
     }
   }

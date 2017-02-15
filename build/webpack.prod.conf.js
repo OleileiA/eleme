@@ -4,7 +4,8 @@ var utils = require('./utils')
 var webpack = require('webpack')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
-/* webpack插件，把编译过程的css单独提取出来 */
+
+/* webpack插件，把编译过程的css单独提取出来 ,生成独立的文件， 而不是打包在JS中1*/
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var env = config.build.env
@@ -44,6 +45,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: config.build.index,
       template: 'index.html',
+      /* 对应的script标签和css的link引入正确的地方 */
       inject: true,
       minify: {
         removeComments: true,
@@ -55,7 +57,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
-    // split vendor js into its own file
+    // 把依赖的第三方库打包
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: function (module, count) {

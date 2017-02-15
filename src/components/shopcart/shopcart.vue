@@ -202,6 +202,7 @@
       }
     }
   }
+
   .list-mask {
     position: fixed;
     top: 0;

@@ -8,6 +8,7 @@ var projectRoot = path.resolve(__dirname, '../');
 var env = process.env.NODE_ENV;
 // check env & config/index.js to decide whether to enable CSS source maps for the
 // various preprocessor loaders added to vue-loader at the end of this file
+/* 生成csssourceMap根据 配置文件 */
 var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap);
 var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap);
 var useCssSourceMap = cssSourceMapDev || cssSourceMapProd;
@@ -81,6 +82,7 @@ module.exports = {
         loader: 'url',
         query: {
           limit: 10000,
+          /* 图片输出到static/img/下 */
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },
@@ -105,7 +107,7 @@ module.exports = {
     loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),
     postcss: [
       require('autoprefixer')({
-        browsers: ['last 2 versions']
+        browsers: ['last 2 versions', 'Android >= 4.0']
       })
     ]
   }

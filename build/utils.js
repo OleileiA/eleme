@@ -2,14 +2,18 @@ var path = require('path');
 var config = require('../config');
 
 /*ExtractTextPlugin：分离CSS和JS文件*/
+/* 使用 extract-text-webpack-plugin就可以把css从js中独立抽离出来 */
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-/*这个文件博暴露出来三个函数。*/
+/*暴露出来三个函数。*/
+
 /*_path/static路径*/
+/* 静态资源路径，根据生产环境和开发环境分别配置。在这里都是static文件夹 */
 exports.assetsPath = function (_path) {
   var assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
     : config.dev.assetsSubDirectory;
+  /* path.join的拼接路径的兼容性写法 */
   return path.posix.join(assetsSubDirectory, _path)
 };
 
@@ -57,6 +61,7 @@ exports.cssLoaders = function (options) {
 };
 
 // Generate loaders for standalone style files (outside of .vue)
+/* 处理vue文件外的css文件 */
 exports.styleLoaders = function (options) {
   var output = [];
   var loaders = exports.cssLoaders(options);

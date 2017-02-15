@@ -39,40 +39,22 @@ apiRoutes.get('/ratings', function (req, res) {
     data: ratings
   });
 });
-app.use('/api',apiRoutes);
+app.use('/api', apiRoutes);
 
 
 //引入webpack模块
 var webpack = require('webpack');
 
-/*const opn = require('opn');
- opn('unicorn.png').then(() => {
- // image viewer closed
- });
- opn('http://sindresorhus.com');
- opn('http://sindresorhus.com', {app: 'firefox'});
- opn('http://sindresorhus.com', {app: ['google chrome', '--incognito']});*/
+/* https://github.com/pwnall/node-open */
+/* 打开一个url或者文件在指定的浏览器或者应用 */
 var opn = require('opn');
 
 //引入http代理中间件
 var proxyMiddleware = require('http-proxy-middleware');
-/*var express = require('sxpress');
- var proxy = require('http-proxy-middleware');
+/* https://vuejs-templates.github.io/webpack/proxy.html */
+/* https://github.com/chimurai/http-proxy-middleware */
 
- var context = '/object/api';//context 可以使一个数组['/object/api','/object2/api',...]
- var options = {
- target: 'http://www.target.org',//目标服务器地址
- changeOrigin: true,             //虚拟主机网站需要
- headers: {                      //添加token,用于开发
- 'Authorization': 'Bearer ' + token,
- 'x-api-version': 1
- }
- }
 
- var apiProxy =  proxy(context, options);
- var app = express();
- app.use(apiProxy);
- app.listen(3000);*/
 
 /*在这里引入的是，webpack的dev文件*/
 var webpackConfig = require('./webpack.dev.conf');
@@ -81,10 +63,19 @@ var webpackConfig = require('./webpack.dev.conf');
 //指定接口
 var port = process.env.PORT || config.dev.port;
 // Define HTTP proxies to your custom API backend
-// https://github.com/chimurai/http-proxy-middleware
 
 //拿到需要代理的接口
 var proxyTable = config.dev.proxyTable;
+
+// proxyTable: {
+//  '/list': {
+//    target: 'http://api.xxxxxxxx.com',
+//    changeOrigin: true,
+//    pathRewrite: {
+//    '^/list': '/list'
+//      }
+//    }
+// }
 
 
 var compiler = webpack(webpackConfig);
